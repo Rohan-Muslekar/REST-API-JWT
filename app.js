@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const postsRoute = require('./api/routes/posts');
+const usersRoute = require('./api/routes/users');
 
 mongoose.connect(`mongodb+srv://rohan:${process.env.DB_PWD}@mongodbcluster-idi7v.mongodb.net/test?retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.connection.on('connected',() => console.log('Database Connected Successfully'));
@@ -14,7 +15,7 @@ app.use(bodyParser.json());
 
 //NOTE: Always use bodyParser before Routing 
 app.use('/posts', postsRoute);
-
+app.use('/users', usersRoute);
 
 //CORS Error
 app.use((req,res,next) => {

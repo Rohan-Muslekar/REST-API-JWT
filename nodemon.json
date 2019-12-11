@@ -1,5 +1,6 @@
 {
     "env":{
-        "DB_PWD": "rohan"
+        "DB_PWD": "rohan",
+        "JWT_KEY": "secret"
     }
 }

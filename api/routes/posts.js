@@ -1,16 +1,17 @@
 const express = require('express');
 const Posts = require('../models/posts');
+const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 const mongoose = require('mongoose');
-//get all posts
-router.get('/', (req,res,next) => {
+//get all posts PUB
+router.get('/',(req,res,next) => {
     Posts.find({})
     .select("title author comments _id")
     .exec()
     .then(result => {
         console.log(result);
         if(result != []){
-            res.status(200).json({
+            res.status(201).json({
                 count: result.length,
                 posts: result.map(res => {
                     return {
@@ -26,7 +27,7 @@ router.get('/', (req,res,next) => {
             });
         }
         else{
-            res.status(200).json({message: "The Collection Is Empty"});
+            res.status(201).json({message: "The Collection Is Empty"});
         }
     })
     .catch(err => {
@@ -35,7 +36,7 @@ router.get('/', (req,res,next) => {
     });
 });
 
-//ge ta post by ID
+//get a post by ID PUB
 router.get('/:postsId', (req,res,next) => {
     
     Posts.findById(req.params.postsId)
@@ -44,7 +45,7 @@ router.get('/:postsId', (req,res,next) => {
     .then(result => {
         console.log(result);
         if(result){
-            res.status(200).json(result);
+            res.status(201).json(result);
         }
         else{
             res.status(404).json({message: "No Valid ID Found!"});
@@ -56,8 +57,8 @@ router.get('/:postsId', (req,res,next) => {
     });
 });
 
-//create a post
-router.post('/',(req,res,next) => {
+//create a post AUTH
+router.post('/',checkAuth ,(req,res,next) => {
     const post = new Posts({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -77,8 +78,8 @@ router.post('/',(req,res,next) => {
     });
 });
 
-//update a post for a postid
-router.patch('/:postsId', (req,res,next) => {
+//update a post for a postid AUTH
+router.patch('/:postsId',checkAuth ,(req,res,next) => {
     Posts.update({_id: req.params.postsId}, {$set: {title: req.body.title}})
     .exec()
     .then(result => {
@@ -90,8 +91,8 @@ router.patch('/:postsId', (req,res,next) => {
     });
 });
 
-//delete a post by id
-router.delete('/:postsId', (req,res,next) => {
+//delete a post by id AUTH
+router.delete('/:postsId',checkAuth , (req,res,next) => {
     Posts.remove({_id: req.params.postsId})
     .exec()
     .then(result => {
@@ -103,8 +104,8 @@ router.delete('/:postsId', (req,res,next) => {
     });
 });
 
-//comment on a post by id
-router.patch('/comment/:postsId', (req,res,next) => {
+//comment on a post by id AUTH
+router.patch('/comment/:postsId',checkAuth, (req,res,next) => {
     Posts.update({_id: req.params.postsId}, {$push: {comments: req.body.comment}})
     .exec()
     .then(result => {
