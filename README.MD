@@ -17,7 +17,7 @@ GET http://localhost:3000/posts/
 
 GET http://localhost:3000/posts/{id}
 
-POST http://localhost:3000/posts/
+POST http://localhost:3000/posts/{id} ref Users ObjectID
 
 DELETE http://localhost:3000/posts/{id}
 

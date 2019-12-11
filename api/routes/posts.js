@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 //get all posts PUB
 router.get('/',(req,res,next) => {
     Posts.find({})
-    .select("title author comments _id")
+    .select("title authorId comments _id")
+    .populate('authorId','_id author')
     .exec()
     .then(result => {
         console.log(result);
@@ -16,7 +17,7 @@ router.get('/',(req,res,next) => {
                 posts: result.map(res => {
                     return {
                         title: res.title,
-                        author: res.author,
+                        authorId: res.authorId,
                         _id: res._id,
                         request: {
                             type: 'GET',
@@ -40,7 +41,7 @@ router.get('/',(req,res,next) => {
 router.get('/:postsId', (req,res,next) => {
     
     Posts.findById(req.params.postsId)
-    .select("title author comments _id")
+    .select("title authorId comments _id")
     .exec()
     .then(result => {
         console.log(result);
@@ -57,12 +58,12 @@ router.get('/:postsId', (req,res,next) => {
     });
 });
 
-//create a post AUTH
-router.post('/',checkAuth ,(req,res,next) => {
+//create a post for a ID AUTH
+router.post('/:authorId',checkAuth ,(req,res,next) => {
     const post = new Posts({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
-        author: req.body.author
+        authorId: req.params.authorId
     });
 
     post.save()

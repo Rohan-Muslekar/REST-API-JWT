@@ -6,7 +6,8 @@ const postsSchema = mongoose.Schema(
         title: {type: String,
                 default: ''
                 },
-        author: {type: String,
+        authorId: {type: mongoose.Schema.Types.ObjectId,
+                ref : 'Users',
                 required: true
                 },
         comments: [
