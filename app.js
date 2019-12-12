@@ -6,7 +6,7 @@ const app = express();
 const postsRoute = require('./api/routes/posts');
 const usersRoute = require('./api/routes/users');
 
-mongoose.connect(`mongodb+srv://rohan:${process.env.DB_PWD}@mongodbcluster-idi7v.mongodb.net/test?retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/test', { useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.connection.on('connected',() => console.log('Database Connected Successfully'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));

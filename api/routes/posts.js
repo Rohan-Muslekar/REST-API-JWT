@@ -119,6 +119,25 @@ router.patch('/comment/:postsId',checkAuth, (req,res,next) => {
     });
 });
 
+router.get('/author/:authorId',checkAuth, (req,res,next) => {
+Posts.find({authorId: req.params.authorId})
+.exec()
+.then(result => {
+    console.log(result);
+    if(result.length > 0)
+    {
+        res.status(201).json({posts: result});
+    }
+    else{
+        res.status(201).json({message: `The Author Has No Posts Yet`,
+        authorId: req.params.authorId}
+        );
+    }
+})
+.catch(err => {
+    res.json(500).json({error: err});
+});
+});
 
 
 module.exports = router;
