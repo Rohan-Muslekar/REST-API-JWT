@@ -32,7 +32,7 @@ router.post('/signup', (req,res,next) => {
                     user.save()
                     .then(result => {
                         console.log(result);
-                        res.status(201).json({result: result});
+                        res.status(201).render('login');
                     })
                     .catch(err => {
                         console.log(err);
@@ -42,7 +42,6 @@ router.post('/signup', (req,res,next) => {
             });
         }
     });
-
 });
 
 //Delete Users AUTH
