@@ -120,7 +120,12 @@ router.post('/login', (req, res, next) => {
                     {expiresIn: '1h'}
                     );
                     console.log(token);
-                    return res.status(200).json({message: "Authentication Success!", token: token});
+                    console.log(result);
+                    return res.status(201).cookie('token', token, {
+                        expires: new Date(Date.now() + '1h'),
+                        secure: false, // set to true if your using https
+                        httpOnly: true,
+                      }).json({message: "Authentication Successfull", token: token});
                 }
                 res.status(401).json({message: "Authentication Failed!"});
             });

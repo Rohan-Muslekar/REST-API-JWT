@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const app = express();
 const postsRoute = require('./api/routes/posts');
 const usersRoute = require('./api/routes/users');
@@ -11,6 +13,8 @@ mongoose.connection.on('connected',() => console.log('Database Connected Success
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
+app.use(cookieParser());
 app.set('view engine' , 'pug');
 app.set('views', './api/views')
 
