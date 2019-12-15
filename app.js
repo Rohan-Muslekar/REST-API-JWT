@@ -6,12 +6,18 @@ const app = express();
 const postsRoute = require('./api/routes/posts');
 const usersRoute = require('./api/routes/users');
 
-mongoose.connect('mongodb://localhost/test', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.DB_CONNECT, { useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.connection.on('connected',() => console.log('Database Connected Successfully'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.set('view engine' , 'pug');
+app.set('views', './api/views')
 
+//Rendering Home page
+app.use('/', (req,res) => {
+    res.render('home');
+});
 
 //NOTE: Always use bodyParser before Routing 
 app.use('/posts', postsRoute);

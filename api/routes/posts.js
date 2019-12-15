@@ -37,7 +37,7 @@ router.get('/',(req,res,next) => {
     });
 });
 
-//get a post by ID PUB
+//get a post by postID PUB
 router.get('/:postsId', (req,res,next) => {
     
     Posts.findById(req.params.postsId)
@@ -119,6 +119,7 @@ router.patch('/comment/:postsId',checkAuth, (req,res,next) => {
     });
 });
 
+// Get a post by author ID
 router.get('/author/:authorId',checkAuth, (req,res,next) => {
 Posts.find({authorId: req.params.authorId})
 .exec()

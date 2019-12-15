@@ -1,6 +1,6 @@
 {
     "env":{
-        "DB_PWD": "rohan",
+        "DB_CONNECT": "mongodb://localhost/test",
         "JWT_KEY": "secret"
     }
 }
