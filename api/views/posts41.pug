@@ -4,7 +4,7 @@ html
     body
         -const allposts = results
         -const authorId = results[0].authorId
-
+    
         div(style="border: 1px solid #555")
             each pos in allposts
                 p="Title: "+pos.title
@@ -13,6 +13,10 @@ html
                     p="(" + c.date+ ")- " + c.body
                 else
                     p No Comments
+                
+                br
+                form(action=`/posts/${pos._id}` method="delete")
+                    input(type="submit" value="Delete")
         div
         form(action=`/posts/${authorId}`, method="post")
             label Title

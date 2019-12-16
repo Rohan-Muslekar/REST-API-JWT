@@ -1,9 +1,0 @@
-doctype html
-html
-    head
-    body
-        - const authorId = result.authorId
-        form(action=`/posts/${authorId}`, method="post")
-            input(type="text" name="title" placeholder="Title") Title
-            br
-            input(type="submit" value="Submit")
