@@ -12,20 +12,7 @@ router.get('/',(req,res,next) => {
     .then(result => {
         console.log(result);
         if(result != []){
-            res.status(201).json({
-                count: result.length,
-                posts: result.map(res => {
-                    return {
-                        title: res.title,
-                        authorId: res.authorId,
-                        _id: res._id,
-                        request: {
-                            type: 'GET',
-                            url: "http://localhost:3000/posts/" + res._id
-                        }
-                    }
-                })
-            });
+            res.status(201).render('allposts',{results: result});
         }
         else{
             res.status(201).json({message: "The Collection Is Empty"});
@@ -46,7 +33,7 @@ router.get('/:postsId', (req,res,next) => {
     .then(result => {
         console.log(result);
         if(result){
-            res.status(201).json(result);
+            res.status(201).render('postdet', {results: result});
         }
         else{
             res.status(404).json({message: "No Valid ID Found!"});
@@ -107,7 +94,7 @@ router.delete('/:postsId',checkAuth , (req,res,next) => {
 
 //comment on a post by id AUTH
 router.patch('/comment/:postsId',checkAuth, (req,res,next) => {
-    Posts.update({_id: req.params.postsId}, {$push: {comments: req.body.comment}})
+    Posts.update({_id: req.params.postsId}, {$push: {comments: {body: req.body.comment}}})
     .exec()
     .then(result => {
         console.log(result);
@@ -119,7 +106,7 @@ router.patch('/comment/:postsId',checkAuth, (req,res,next) => {
     });
 });
 
-// Get a post by author ID
+// Get all post by author ID
 router.get('/author/:authorId',checkAuth, (req,res,next) => {
 Posts.find({authorId: req.params.authorId})
 .exec()
@@ -127,16 +114,15 @@ Posts.find({authorId: req.params.authorId})
     console.log(result);
     if(result.length > 0)
     {
-        res.status(201).json({posts: result});
+        res.status(201).render('posts41',{results: result});
     }
     else{
         res.status(201).json({message: `The Author Has No Posts Yet`,
-        authorId: req.params.authorId}
-        );
+        authorId: req.params.authorId});
     }
 })
 .catch(err => {
-    res.json(500).json({error: err});
+    res.status(500).json({error: err});
 });
 });
 

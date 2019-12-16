@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+    body
+        -const allposts = results
+        -const authorId = results[0].authorId
+
+        div(style="border: 1px solid #555")
+            each pos in allposts
+                p="Title: "+pos.title
+                p Comments
+                for c in pos.comments
+                    p="(" + c.date+ ")- " + c.body
+                else
+                    p No Comments
+        div
+        form(action=`/posts/${authorId}`, method="post")
+            label Title
+            input(type="text", name="title")
+            br
+            input(type="submit" value="Submit")

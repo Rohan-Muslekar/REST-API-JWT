@@ -12,7 +12,7 @@ const postsSchema = mongoose.Schema(
                 },
         comments: [
             {
-                type: String,
+                body: String,
                 date: {
                     type: Date,
                     default: Date.now

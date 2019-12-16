@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+    body
+        - const posts = results
+        div(style = "border: 1px solid #555")
+            p="title: "+posts.title
+            p="authorId: "+posts.authorId
+            | Comments:
+            br
+            for com in posts.comments
+                p=com.date + " " + com.body
+            else
+                p="No Comments"
+            
