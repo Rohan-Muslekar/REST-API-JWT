@@ -19,17 +19,17 @@ app.set('view engine' , 'pug');
 app.set('views', './api/views')
 
 //Rendering Home SignUp Login Pages
-app.use('/home', (req,res,next) => {
-    res.render('home');
-});
+// app.use('/home', (req,res,next) => {
+//     res.render('home');
+// });
 
-app.use('/signup', (req,res,next) => {
-    res.render('signup');
-});
+// app.use('/signup', (req,res,next) => {
+//     res.render('signup');
+// });
 
-app.use('/login', (req,res,next) => {
-    res.render('login');
-});
+// app.use('/login', (req,res,next) => {
+//     res.render('login');
+// });
 
 
 //NOTE: Always use bodyParser before Routing 
